@@ -2,6 +2,7 @@ package com.student.studentsystem.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.student.studentsystem.dto.PageResponseDTO;
@@ -12,6 +13,7 @@ import com.student.studentsystem.service.StudentService;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,10 +40,12 @@ public class StudentController {
     }
 
     @PostMapping 
+    @ResponseStatus (HttpStatus.CREATED)
     public StudentResponseDTO createStudent(@Valid @RequestBody StudentRequestDTO student){
         return studentService.createStudent(student);
     }
     @DeleteMapping ("/{id}")
+    @ResponseStatus (HttpStatus.NO_CONTENT)
     public String deleteStudentById(@PathVariable Long id){
          return studentService.deleteStudent(id);
     }

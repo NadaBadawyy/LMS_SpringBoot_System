@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.student.studentsystem.dto.PageResponseDTO;
@@ -14,6 +15,7 @@ import com.student.studentsystem.entity.Student;
 import com.student.studentsystem.exceptions.NotFoundException;
 import com.student.studentsystem.repository.DepartmentRepository;
 import com.student.studentsystem.repository.StudentRepository;
+import com.student.studentsystem.specification.StudentSpecification;
 
 @Service
 public class StudentService {
@@ -33,8 +35,21 @@ public class StudentService {
 
     public PageResponseDTO<StudentResponseDTO> getAllStudents(String name, Long departmentId, Pageable pageable) {
         Page<Student> studentPage;
+        Specification<Student>specification = (root,query, builder)->null;
 
-        studentPage = studentRepository.searchStudents(name, departmentId, pageable);
+        if(name!=null &&!name.isBlank()){
+            specification=specification.and(
+                StudentSpecification.hasName(name)
+            );
+            
+        }
+        if(departmentId!=null){
+           specification= specification.and(
+                StudentSpecification.hasDepartment(departmentId)
+            );
+        }
+        studentPage= studentRepository.findAll(specification,pageable);
+        // studentPage = studentRepository.searchStudents(name, departmentId, pageable);
 
         List<StudentResponseDTO> students = studentPage.map(s -> maptoStudentDTO(s)).getContent();
         return new PageResponseDTO<>(students, studentPage.getNumber(), studentPage.getSize(),
