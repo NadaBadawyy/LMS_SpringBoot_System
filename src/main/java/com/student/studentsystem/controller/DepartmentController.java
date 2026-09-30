@@ -40,6 +40,4 @@ public class DepartmentController {
         return departmentService.deleteDepartment(id);
     }
 
-    
-
 }
