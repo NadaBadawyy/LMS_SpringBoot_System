@@ -9,4 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public record EnrollmentRequestDTO(
         @NotNull LocalDate enrollmentDate,
         @NotBlank String status,
-        BigDecimal grade) {}
+        BigDecimal grade,
+        @NotNull Long studentId,
+        @NotNull Long courseOfferingId
+    ) {}

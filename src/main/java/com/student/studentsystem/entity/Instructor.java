@@ -21,7 +21,7 @@ public class Instructor {
     @JoinColumn (name = "dept_id")
     private Department department;
     @OneToMany (mappedBy = "instructor")
-    private List<Course> courses;
+    private List<CourseOffering> courseOfferings;
 
 
     public Instructor() {

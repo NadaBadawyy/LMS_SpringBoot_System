@@ -7,5 +7,4 @@ public record LessonRequestDTO(
         @NotBlank String title,
         String description,
         @Positive Integer lessonOrder,
-        String contentUrl,
-        @Positive Integer durationMinutes) {}
+        String contentUrl,Long courseId) {}

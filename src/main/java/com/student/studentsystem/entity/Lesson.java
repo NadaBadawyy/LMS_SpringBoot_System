@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -11,14 +13,16 @@ import jakarta.persistence.Table;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;   
+     private Integer lessonOrder;
     private String title;
     private String description;
-    private Integer lessonOrder;
     private String contentUrl;
-    private Integer durationMinutes;
 
-    // Relationship fields will be added manually later.
+    @ManyToOne 
+    @JoinColumn (name = "course_id")
+    private Course course;
+
     public Lesson() {}
 
     public Long getId() { return id; }
@@ -31,6 +35,6 @@ public class Lesson {
     public void setLessonOrder(Integer lessonOrder) { this.lessonOrder = lessonOrder; }
     public String getContentUrl() { return contentUrl; }
     public void setContentUrl(String contentUrl) { this.contentUrl = contentUrl; }
-    public Integer getDurationMinutes() { return durationMinutes; }
-    public void setDurationMinutes(Integer durationMinutes) { this.durationMinutes = durationMinutes; }
+    public Course getCourse() { return course; }
+    public void setCourse(Course course) { this.course = course; }
 }

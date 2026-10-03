@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,8 +20,13 @@ public class Enrollment {
     private LocalDate enrollmentDate;
     private String status;
     private BigDecimal grade;
+    @ManyToOne
+    @JoinColumn (name = "student_id")
+    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "courseoffering_id")
+    private CourseOffering courseOffering;
 
-    // Relationship fields will be added manually later.
     public Enrollment() {}
 
     public Long getId() { return id; }
@@ -30,4 +37,8 @@ public class Enrollment {
     public void setStatus(String status) { this.status = status; }
     public BigDecimal getGrade() { return grade; }
     public void setGrade(BigDecimal grade) { this.grade = grade; }
+    public Student getStudent() { return student; }
+    public void setStudent(Student student) { this.student = student; }
+    public CourseOffering getCourseOffering() { return courseOffering; }
+    public void setCourseOffering(CourseOffering courseOffering) { this.courseOffering = courseOffering; }
 }

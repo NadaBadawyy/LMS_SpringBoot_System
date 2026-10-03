@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,8 +21,16 @@ public class CourseOffering {
     private String status;
     private LocalDate startDate;
     private LocalDate endDate;
+    @ManyToOne
+    @JoinColumn (name = "course_id")
+    private Course course;
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+    @ManyToOne
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
 
-    // Relationship fields will be added manually later.
     public CourseOffering() {}
 
     public Long getId() { return id; }
@@ -35,4 +45,10 @@ public class CourseOffering {
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public Course getCourse() { return course; }
+    public void setCourse(Course course) { this.course = course; }
+    public Semester getSemester() { return semester; }
+    public void setSemester(Semester semester) { this.semester = semester; }
+    public Instructor getInstructor() { return instructor; }
+    public void setInstructor(Instructor instructor) { this.instructor = instructor; }
 }

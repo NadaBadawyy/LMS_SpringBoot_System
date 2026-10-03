@@ -10,15 +10,15 @@ import com.student.studentsystem.entity.Course;
 import com.student.studentsystem.exceptions.NotFoundException;
 import com.student.studentsystem.repository.CourseRepository;
 import com.student.studentsystem.repository.DepartmentRepository;
-import com.student.studentsystem.repository.InstrunctorRepository;
+import com.student.studentsystem.repository.InstructorRepository;
 
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
     private final DepartmentRepository departmentRepository;
-    private final InstrunctorRepository instructorRepository;
+    private final InstructorRepository instructorRepository;
 
-    public CourseService(CourseRepository courseRepository, DepartmentRepository departmentRepository, InstrunctorRepository instructorRepository) {
+    public CourseService(CourseRepository courseRepository, DepartmentRepository departmentRepository, InstructorRepository instructorRepository) {
         this.courseRepository = courseRepository;
         this.departmentRepository = departmentRepository;
         this.instructorRepository = instructorRepository;

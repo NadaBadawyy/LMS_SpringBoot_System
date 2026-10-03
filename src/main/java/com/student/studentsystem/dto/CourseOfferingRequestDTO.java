@@ -10,6 +10,9 @@ public record CourseOfferingRequestDTO(
         @Positive Integer capacity,
         @NotBlank String status,
         LocalDate startDate,
-        LocalDate endDate
+        LocalDate endDate,
+        @Positive Long courseId,
+        @Positive Long semesterId,
+        @Positive Long instructorId
     
     ) {}

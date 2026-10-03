@@ -6,20 +6,24 @@ import org.springframework.stereotype.Service;
 
 import com.student.studentsystem.dto.LessonRequestDTO;
 import com.student.studentsystem.dto.LessonResponseDTO;
+import com.student.studentsystem.entity.Course;
 import com.student.studentsystem.entity.Lesson;
 import com.student.studentsystem.exceptions.NotFoundException;
+import com.student.studentsystem.repository.CourseRepository;
 import com.student.studentsystem.repository.LessonRepository;
 
 @Service
 public class LessonService {
     private final LessonRepository lessonRepository;
+    private final CourseRepository courseRepository;
 
-    public LessonService(LessonRepository lessonRepository) {
+    public LessonService(LessonRepository lessonRepository, CourseRepository courseRepository) {
         this.lessonRepository = lessonRepository;
+        this.courseRepository = courseRepository;
     }
 
     private LessonResponseDTO toResponse(Lesson lesson) {
-        return new LessonResponseDTO(lesson.getId(), lesson.getTitle(), lesson.getDescription(), lesson.getLessonOrder(), lesson.getContentUrl(), lesson.getDurationMinutes());
+        return new LessonResponseDTO(lesson.getId(), lesson.getTitle(), lesson.getDescription(), lesson.getLessonOrder(), lesson.getContentUrl(), lesson.getCourse().getTitle());
     }
 
     private Lesson toEntity(LessonRequestDTO request) {
@@ -28,7 +32,9 @@ public class LessonService {
         lesson.setDescription(request.description());
         lesson.setLessonOrder(request.lessonOrder());
         lesson.setContentUrl(request.contentUrl());
-        lesson.setDurationMinutes(request.durationMinutes());
+        Course course=  courseRepository.findById(request.courseId())
+                .orElseThrow(() -> new NotFoundException("Course not found with id: " + request.courseId()));
+        lesson.setCourse(course);
         return lesson;
     }
 
@@ -52,7 +58,6 @@ public class LessonService {
         lesson.setDescription(request.description());
         lesson.setLessonOrder(request.lessonOrder());
         lesson.setContentUrl(request.contentUrl());
-        lesson.setDurationMinutes(request.durationMinutes());
         return toResponse(lessonRepository.save(lesson));
     }
 

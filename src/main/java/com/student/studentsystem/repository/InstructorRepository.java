@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.student.studentsystem.entity.Instructor;
 
-public interface InstrunctorRepository extends JpaRepository<Instructor, Long> {
+public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     List<Instructor>getInstructorsByDepartmentId(Long id);
     

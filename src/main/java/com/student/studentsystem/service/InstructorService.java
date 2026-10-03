@@ -10,13 +10,13 @@ import com.student.studentsystem.entity.Department;
 import com.student.studentsystem.entity.Instructor;
 import com.student.studentsystem.exceptions.NotFoundException;
 import com.student.studentsystem.repository.DepartmentRepository;
-import com.student.studentsystem.repository.InstrunctorRepository;
+import com.student.studentsystem.repository.InstructorRepository;
 
 @Service 
 public class InstructorService {
-    private final InstrunctorRepository instrunctorRepository;
+    private final InstructorRepository instrunctorRepository;
     private final DepartmentRepository departmentRepository;
-    public  InstructorService(InstrunctorRepository instrunctorRepository, DepartmentRepository departmentRepository){
+    public  InstructorService(InstructorRepository instrunctorRepository, DepartmentRepository departmentRepository){
         this.instrunctorRepository=instrunctorRepository;
         this.departmentRepository=departmentRepository;
     }

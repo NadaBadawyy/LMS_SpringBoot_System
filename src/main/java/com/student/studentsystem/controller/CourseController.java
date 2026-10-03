@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.student.studentsystem.dto.CourseOfferingResponseDTO;
 import com.student.studentsystem.dto.CourseRequestDTO;
 import com.student.studentsystem.dto.CourseResponseDTO;
+import com.student.studentsystem.service.CourseOfferingService;
 import com.student.studentsystem.service.CourseService;
 
 @RestController
@@ -23,14 +25,23 @@ import com.student.studentsystem.service.CourseService;
 public class CourseController {
     private final CourseService courseService;
 
-    public CourseController(CourseService courseService) { this.courseService = courseService; }
+    private final CourseOfferingService courseOfferingService;
+
+    public CourseController(CourseService courseService, CourseOfferingService courseOfferingService) {
+        this.courseService = courseService;
+        this.courseOfferingService = courseOfferingService;
+    }
 
     @GetMapping
     public List<CourseResponseDTO> getAll() { return courseService.getAll(); }
 
     @GetMapping("/{id}")
     public CourseResponseDTO getById(@PathVariable Long id) { return courseService.getById(id); }
-
+    @GetMapping ("/{courseId}/course-offerings")
+    public List<CourseOfferingResponseDTO> getCourseOfferingsByCourseId(@PathVariable Long
+    courseId){
+            return courseOfferingService.getCourseOfferingsByCourseId(courseId);
+        }
     @PostMapping
     public ResponseEntity<CourseResponseDTO> create(@Valid @RequestBody CourseRequestDTO request) {
         CourseResponseDTO created = courseService.create(request);
