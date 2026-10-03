@@ -93,5 +93,10 @@ public class StudentService {
         existingStudent.setDepartment(department);
         return maptoStudentDTO(studentRepository.save(existingStudent));
     }
+    public List<StudentResponseDTO> getStudentsByDepartmentId(Long departmentId) {
+        return studentRepository.getStudentsByDepartmentId(departmentId).stream()
+                .map(student -> maptoStudentDTO(student))
+                .toList();
+    }
 
 }

@@ -1,0 +1,11 @@
+package com.student.studentsystem.dto;
+
+import java.time.LocalDate;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record SemesterRequestDTO(
+        @NotBlank String name,
+        @NotNull LocalDate startDate,
+        @NotNull LocalDate endDate) {}

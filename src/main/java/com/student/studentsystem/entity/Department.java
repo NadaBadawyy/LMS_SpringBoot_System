@@ -15,6 +15,11 @@ public class Department {
     private Long id;
 
     private String name;
+    
+    @OneToMany (mappedBy = "department")
+    private List<Student>students;
+    @OneToMany (mappedBy = "department")
+    private List<Instructor>instructors;
     public Department(){
         
     }
@@ -35,8 +40,7 @@ public class Department {
         this.name = name;
     }
 
-    @OneToMany (mappedBy = "department")
-    private List<Student>students;
+    
 
     
 

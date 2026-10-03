@@ -29,6 +29,11 @@ public class DepartmentService {
         .map((d)->new DepartmentResponseDTO(d.getId(), d.getName())).toList();
 
     }
+    public DepartmentResponseDTO getDepartmentById(Long id){
+        return departmentRepository.findById(id)
+        .map((d)->new DepartmentResponseDTO(d.getId(), d.getName()))
+        .orElseThrow(()->new NotFoundException("department not found with id: "+id));
+    }
     public DepartmentResponseDTO createDepartment(DepartmentRequestDTO department){
         Department dept= new Department();
         dept.setName(department.getName());
@@ -44,6 +49,8 @@ public class DepartmentService {
         departmentRepository.delete(dept);
         return "Department has deleted successfully";
     }
+
+    
 
     
 }

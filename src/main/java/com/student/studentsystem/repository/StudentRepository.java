@@ -27,6 +27,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>,JpaSpeci
        
         public Page<Student> searchStudents(@Param("name") String name, @Param("deptId") Long departmentId,
                         Pageable page);
+
+        public List<Student> getStudentsByDepartmentId(Long departmentId);
         
 
 }
