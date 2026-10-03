@@ -9,4 +9,8 @@ public record CourseRequestDTO(
         @NotBlank String title,
         String description,
         @NotNull @Positive Integer credits,
-        @NotNull Boolean active) {}
+        @NotNull Boolean active,
+        @NotNull Long departmentId,
+        @NotNull Long instructorId
+    
+    ) {}

@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.student.studentsystem.dto.CourseResponseDTO;
 import com.student.studentsystem.dto.DepartmentRequestDTO;
 import com.student.studentsystem.dto.DepartmentResponseDTO;
 import com.student.studentsystem.dto.InstructorResponseDTO;
 import com.student.studentsystem.dto.StudentResponseDTO;
+import com.student.studentsystem.service.CourseService;
 import com.student.studentsystem.service.DepartmentService;
 import com.student.studentsystem.service.InstructorService;
 import com.student.studentsystem.service.StudentService;
@@ -24,10 +27,12 @@ public class DepartmentController {
     private final DepartmentService departmentService;
     private final StudentService studentService;
     private final InstructorService instructorService;
-    public DepartmentController(DepartmentService departmentService, StudentService studentService, InstructorService instructorService){
+    private final CourseService courseService;  
+    public DepartmentController(DepartmentService departmentService, StudentService studentService, InstructorService instructorService, CourseService courseService){
         this.departmentService=departmentService;
         this.studentService=studentService;
         this.instructorService=instructorService;
+        this.courseService=courseService;
     }   
   
     @GetMapping 
@@ -46,6 +51,10 @@ public class DepartmentController {
     @GetMapping ("/{departmentId}/instructors")
     public List<InstructorResponseDTO> getInstructorsByDepartmentId(@PathVariable Long departmentId){
         return instructorService.getInstructorsByDepartmentId(departmentId);
+    }
+    @GetMapping ("/{departmentId}/courses")
+    public List<CourseResponseDTO> getCoursesByDepartmentId(@PathVariable Long departmentId){
+        return courseService.getCoursesByDepartmentId(departmentId);
     }
     @PostMapping
     public DepartmentResponseDTO CreateDepartment(@RequestBody DepartmentRequestDTO department){

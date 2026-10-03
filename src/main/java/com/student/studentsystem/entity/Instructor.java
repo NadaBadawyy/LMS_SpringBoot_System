@@ -1,6 +1,5 @@
 package com.student.studentsystem.entity;
-
-import org.hibernate.annotations.ManyToAny;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity 
 public class Instructor {
@@ -20,6 +20,9 @@ public class Instructor {
     @ManyToOne
     @JoinColumn (name = "dept_id")
     private Department department;
+    @OneToMany (mappedBy = "instructor")
+    private List<Course> courses;
+
 
     public Instructor() {
     }

@@ -10,4 +10,6 @@ public record CourseOfferingRequestDTO(
         @Positive Integer capacity,
         @NotBlank String status,
         LocalDate startDate,
-        LocalDate endDate) {}
+        LocalDate endDate
+    
+    ) {}

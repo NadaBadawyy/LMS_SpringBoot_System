@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.student.studentsystem.dto.CourseResponseDTO;
 import com.student.studentsystem.dto.InstructorRequestDTO;
 import com.student.studentsystem.dto.InstructorResponseDTO;
+import com.student.studentsystem.service.CourseService;
 import com.student.studentsystem.service.InstructorService;
 
 @RestController 
 @RequestMapping ("/instructors")
 public class InstructorController {
-
+    private final CourseService courseService;
     private final InstructorService instructorService;
-    public InstructorController(InstructorService instructorService){
+
+    public InstructorController(InstructorService instructorService, CourseService courseService){
         this.instructorService=instructorService;
+        this.courseService=courseService;
     }
     @GetMapping 
     public List<InstructorResponseDTO> getAllInstructors(){
@@ -30,6 +34,11 @@ public class InstructorController {
     @GetMapping ("/{id}")
     public InstructorResponseDTO getInstructorById(@PathVariable Long id){
         return instructorService.getInstructorById(id);
+    }
+
+    @GetMapping ("/{instructorId}/courses")
+    public List<CourseResponseDTO> getCoursesByInstructorId(@PathVariable Long instructorId){
+        return courseService.getCoursesByInstructorId(instructorId);
     }
     @PostMapping 
     public InstructorResponseDTO createInstructor(@RequestBody InstructorRequestDTO instructor){

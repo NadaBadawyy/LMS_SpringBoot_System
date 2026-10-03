@@ -20,6 +20,8 @@ public class Department {
     private List<Student>students;
     @OneToMany (mappedBy = "department")
     private List<Instructor>instructors;
+    @OneToMany (mappedBy = "department")
+    private List<Course>courses;
     public Department(){
         
     }

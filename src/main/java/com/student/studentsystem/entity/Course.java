@@ -1,9 +1,13 @@
 package com.student.studentsystem.entity;
 
+import org.hibernate.annotations.MapKeyCompositeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,7 +22,13 @@ public class Course {
     private Integer credits;
     private Boolean active;
 
-    // Relationship fields will be added manually later.
+
+    @ManyToOne 
+    @JoinColumn (name="dept_id")
+    private Department department;
+    @ManyToOne
+    @JoinColumn (name="instructor_id")
+    private Instructor instructor;
     public Course() {}
 
     public Long getId() { return id; }
@@ -33,4 +43,9 @@ public class Course {
     public void setCredits(Integer credits) { this.credits = credits; }
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public Department getDepartment() { return department; }
+    public void setDepartment(Department department) { this.department = department; }
+    public Instructor getInstructor() { return instructor; }
+    public void setInstructor(Instructor instructor) { this.instructor = instructor; }
 }

@@ -9,17 +9,23 @@ import com.student.studentsystem.dto.CourseResponseDTO;
 import com.student.studentsystem.entity.Course;
 import com.student.studentsystem.exceptions.NotFoundException;
 import com.student.studentsystem.repository.CourseRepository;
+import com.student.studentsystem.repository.DepartmentRepository;
+import com.student.studentsystem.repository.InstrunctorRepository;
 
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final DepartmentRepository departmentRepository;
+    private final InstrunctorRepository instructorRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, DepartmentRepository departmentRepository, InstrunctorRepository instructorRepository) {
         this.courseRepository = courseRepository;
+        this.departmentRepository = departmentRepository;
+        this.instructorRepository = instructorRepository;
     }
 
     private CourseResponseDTO toResponse(Course course) {
-        return new CourseResponseDTO(course.getId(), course.getCode(), course.getTitle(), course.getDescription(), course.getCredits(), course.getActive());
+        return new CourseResponseDTO(course.getId(), course.getCode(), course.getTitle(), course.getDescription(), course.getCredits(), course.getActive(), course.getDepartment().getName(), course.getInstructor().getName());
     }
 
     private Course toEntity(CourseRequestDTO request) {
@@ -29,6 +35,10 @@ public class CourseService {
         course.setDescription(request.description());
         course.setCredits(request.credits());
         course.setActive(request.active());
+        course.setDepartment(departmentRepository.findById(request.departmentId())
+                .orElseThrow(() -> new NotFoundException("Department not found with id: " + request.departmentId())));
+        course.setInstructor(instructorRepository.findById(request.instructorId())
+                .orElseThrow(() -> new NotFoundException("Instructor not found with id: " + request.instructorId())));
         return course;
     }
 
@@ -42,6 +52,10 @@ public class CourseService {
     }
 
     public CourseResponseDTO create(CourseRequestDTO request) {
+        departmentRepository.findById(request.departmentId())
+                .orElseThrow(() -> new NotFoundException("Department not found with id: " + request.departmentId()));
+        instructorRepository.findById(request.instructorId())
+                .orElseThrow(() -> new NotFoundException("Instructor not found with id: " + request.instructorId()));
         return toResponse(courseRepository.save(toEntity(request)));
     }
 
@@ -60,5 +74,11 @@ public class CourseService {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Course not found with id: " + id));
         courseRepository.delete(course);
+    }
+    public List<CourseResponseDTO> getCoursesByDepartmentId(Long departmentId) {
+        return courseRepository.findByDepartmentId(departmentId).stream().map(this::toResponse).toList();
+    }
+    public List<CourseResponseDTO> getCoursesByInstructorId(Long instructorId) {
+        return courseRepository.findByInstructorId(instructorId).stream().map(this::toResponse).toList();
     }
 }
